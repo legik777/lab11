@@ -1,180 +1,107 @@
-# Лабораторная работа № 1
+# Лабораторная работа №4
 
-[![Build Status](https://travis-ci.com/legik777/temp5.svg?branch=ver2)](https://travis-ci.com/legik777/temp5)
+Лабораторная работа посвящена изучению работы с файловой системой на языке **C++**. В стандарте **C++17** появилась библиотека для работы с [файловой системой](https://en.cppreference.com/w/cpp/filesystem). Но так как на данный момент еще не все компиляторы поддерживают новейший стандарт **C++** в этой лабораторный используется библиотека **boost::filesystem**, которая была взята за основу при разработке стандарта.
 
 ## Задание
 
-Реализовать утилиту табличного вывода массива данных, хранящихся в файле формата **JSON**.<br />
+Использовать библиотеку **boost::filesystem** для анализа директории с [FTP](https://ru.wikipedia.org/wiki/FTP)-файлами, содержащими финансовую информацию. Подробная инструкция по библиотеке **boost::filesystem** есть, например, [тут](https://www.boost.org/doc/libs/1_68_0/libs/filesystem/doc/tutorial.html).
 
-В качестве аргумента утилите передается путь в к файлу, который в ключе `items`<br />
-содержит массив объектов, каждый объект из которых имеет следующие ключи:<br />
-`name` - фамилия и имя студента (строчный тип)<br />
-`group` - номер группы (строчный/целочисленный тип)<br />
-`avg` - средний балл (строчный/целочисленный/вещественный тип)<br />
-`debt` - список задолженностей (строчный/перечислительный тип)<br />
+Структура анализируемой директории в общем случае может имеет вид:
 
-## Иллюстрация
+```Shell
+ftp                                         # корневой каталог ftp
+├── ib                                      # каталог, содержащий файлы от брокера ib
+     ├── balance_00001234_20181001.old.txt  # файлы финансовой отчётности в старом формате 
+     ├── balance_00001234_20181001.txt      # файлы финансовой отчётночти в новом формате 
+     ├── balance_00001346_20181001.txt      
+     ├── ...     
+     └── balance_00001346_20181018.txt      
+├── bcs                                     # каталог, содержащий файлы от брокера bcs
+     ├── balance_12341234_20181001.txt
+     └── ...     
+├── otkritie                                # каталог, содержащий файлы от брокера otkritie
+     └── ...   
+└── docs                                    # каталог, содержащий какие-то произвольные файлы
+     ├── readme.txt     
+     └── report.doc 
+```
 
-Рассмотрим на примере **students.json** файл содержащий описание 3 студентов.
+Файлы, содержащие финансовую информацию, имеют имя в определенном формате:
+`balance_XXXXXXXX_YYYYMMDD.txt`, где 
 
-```json
+| Поле | Описание |
+| ------ | ------ |
+| `balance` | тип файла |
+| `XXXXXXXX` | 8-и значный номер счёта |
+| `YYYYMMDD` | дата, где `YYYY`-год, `MM`-месяц и `DD`-день |
+| `.txt` | расширение файла |
+
+## Необходимо
+
+- в проекте, созданном в задании 1, создать файл `main.cpp` и подключить библиотеку **boost::filesystem** (`<boost/filesystem.hpp>`);
+- считать из аргументов командной строки `args` функции `main` путь к анализируемой директории `path_to_ftp`. Если аргумент отсутствует, то по умолчанию программа должна анализировать директорию, в которой она находится;
+- организовать итерацию по всем файлам и вложенным директориям, включая символьные ссылки, с целью поиска всех файлов, содержащих финансовую информацию;
+- файлы, имеющие имя, отличное от описанного формата, необходимо игнорировать;
+- файлы, содержищие финансовую информацию, но имеющие в конце постфикс `.old.txt`, необходимо игнорировать;
+- программа должна вывести на экран список всех обнаруженных финансовых файлов в формате:
+
+```Shell
+ib balance_00001234_20181001.txt
+ib balance_00001234_20181002.txt
+ib balance_00001234_20181003.txt
+bcs balance_00001234_20181001.txt
+bcs balance_00001234_20181005.txt
+...
+```
+
+- также она должна вывести общее количество файлов по каждому обнаруженному счёту и дату самого актуального (самого нового) файла, например:
+
+```Shell
+broker:ib account:00001234 files:10 lastdate:20181017
+broker:ib account:00001356 files:7 lastdate:20181018
+broker:bcs account:12341356 files:8 lastdate:20181016
+```
+
+## Рекомендации
+
+Подключение библиотеки `boost::filesystem` осуществить с помощью пакетного менеджера **Hunter** (см. [пример](https://docs.hunter.sh/en/latest/packages/pkg/Boost.html)).
+
+Для работы с путями к файлам необходимо использовать тип `boost::filesystem::path` и его методы.
+
+Пример:
+
+```cpp
+const path p{"mydir/file.txt"};
+std::cout << p.filename() << std::endl
+          << p.stem() << std::endl
+          << p.extension() << std::endl;
+```
+
+```Shell
+# Вывод
+file.txt
+file
+.txt
+```
+Для итерации по директории необходимо использовать `boost::filesystem::directory_iterator`.
+
+Пример кода, который выведет пути ко всем файлам и вложенным директориям в папке:
+
+```cpp
+const path p{"mydir/"};
+for (const directory_entry& x : directory_iterator{p})
 {
-  "items": [
-    {
-      "name": "Ivanov Petr",
-      "group": "1",
-      "avg": "4.25",
-      "debt": null
-    },
-    {
-      "name": "Sidorov Ivan",
-      "group": 31,
-      "avg": 4,
-      "debt": "C++"
-    },
-    {
-      "name": "Pertov Nikita",
-      "group": "IU8-31",
-      "avg": 3.33,
-      "debt": [
-        "C++",
-        "Linux",
-        "Network"
-      ]
-    }
-  ],
-  "_meta": {
-    "count": 3
-  }
+   std::cout << x.path() << std::endl;
 }
 ```
 
-И иллюстрацию того, что должна вывести программа после обработки данного файла.
-```sh
-# ./parser students.json
+Также могут быть полезны следующие функции и типы библиотеки **boost::filesystem**:
 
-| name          | group  | avg  | debt          |
-|---------------|--------|------|---------------|
-| Ivanov Petr   | 1      | 4.25 | null          |
-|---------------|--------|------|---------------|
-| Sidorov Ivan  | 31     | 4.00 | C++           |
-|---------------|--------|------|---------------|
-| Pertov Nikita | IU8-31 | 3.33 | 3 items       |
-|---------------|--------|------|---------------|
-```
-
-## Требования
-
-При разработке утилиты `parser` необходимо учесть следующие моменты:
-
-- Реализовать проверку входных данных:
-  * наличия аргумента, содержащего путь к файлу
-  * существования файла
-  * `items is array`
-  * `_meta.count == len(items)`
-- Вывод ошибок должен быть информативным
-- При написание тестов учесть сценарии с различными типами для полей (`group`, `avg`, `debt`)
-
-## Подсказки
-
-Для парсинга **JSON** файла стоит воспользоваться библиотекой `nlohmann_json`,
-подключив ее через пакетный менеджер **Hunter**.
-
-```cpp
-// include/student.hpp
-
-struct Student {
-    std::string name;
-    std::any group;
-    std::any avg;
-    std::any debt;
-}
-```
-
-```cpp
-// sources/student.cpp
-
-using nlohmann::json;
-
-void from_json(const json& j, student_t& s) {
-
-    s.name = get_name(j.at("group"));
-    s.group = get_group(j.at("group"));
-    s.avg = get_avg(j.at("avg"));
-    s.debt = get_group(j.at("debt"));
-}
-
-auto get_name(const json& j) -> std::string {
-    return j.get<std::string>();
-}
-
-auto get_debt(const json& j) -> std::any {
-    if (j.is_null())
-        return nullptr;
-    else if (j.is_string())
-        return j.get<std::string>();
-    else
-        return j.get<std::vector<std::string> >();
-}
-
-auto get_avg(const json& j) -> std::any {
-    if (j.is_null())
-        return nullptr;
-    else if (j.is_string())
-        return j.get<std::string>();
-    else if (j.is_number_float())
-        return j.get<double>();
-    else
-        return j.get<std::size_t>();
-}
-
-auto get_group(const json& j) -> std::any {
-    if (j.is_string())
-        return = j.get<std::string>();
-    else
-        return j.get<std::size_t>();
-}
-```
-
-```cpp
-// sources/main.cpp
-
-int main() {
-    //...
-    std::ifstream file{jsonPath};
-    if (!file) {
-        throw std::runtime_error{"unable to open json: " + jsonPath};
-    }
-
-    json data;
-    file >> data;
-
-    std::vector<student_t> students;
-    for (auto const& item : data.at("items")) {
-        auto student = item.get<student_t>()
-        students.push_back(student);
-    }
-    //...
-    print(students, std::cout);
-}
-
-void print(const std::vector<student_t>& students, std::ostream& os) {
-
-    //...
-    for (auto const& student : students) {
-        print(student, os);
-    }
-}
-void print(const student_t& student, std::ostream& os) {
-    //...
-    if (student.debt.type() == typeid(std::nullptr_t)) {
-        os << "null";
-    } else if (student.debt.type() == typeid(std::string)) {
-        os << std::any_cast<std::string>(student.debt);
-    } else {
-        os
-          << std::any_cast<std::vector<std::string> >(student.debt).size()
-          << " items";
-    }
-}
-```
+| Функция/тип | Описание |
+| ------ | ------ |
+| `exists` | определяет, существует ли файл или директория по указанному пути |
+| `is_regular_file` | определяет, является ли узел по указанному пути `path` обычным файлом |
+| `is_directory` | определяет, является ли узел по указанному пути `path` директорией |
+| `is_symlink` | определяет, является ли узел по указанному пути `path` символьной ссылкой |
+| `read_symlink` | разрешает символическую ссылку, возаращаемый объект `path` хранит содержимое символической ссылки, либо пустое значение |
+| `filesystem_error` | тип исключений, возникающих при ошибках в `boost::filesystem` |
