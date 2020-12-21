@@ -20,6 +20,7 @@ TEST(file, searchtest) {
 TEST(file, validityDetectedFinancialFiles) {
     Broker::clearVector();
     bool test2 = true;
+    /*
     std::vector<std::string> vect = {
 "broker:ib account:00100001 files:48 lastdate:20181018",
 "broker:ib account:00100002 files:48 lastdate:20181018",
@@ -30,6 +31,17 @@ TEST(file, validityDetectedFinancialFiles) {
 "broker:bcs account:00123458 files:48 lastdate:20181018",
 "broker:otkritie account:03934523 files:47 lastdate:20181017",
 "broker:otkritie account:03934520 files:48 lastdate:20181018"};
+*/
+    std::vector<std::string> vect = {
+"broker:otkritie account:03934520 files:48 lastdate:20181018",
+"broker:otkritie account:03934523 files:47 lastdate:20181017",
+"broker:bcs account:00123456 files:44 lastdate:20181014",
+"broker:bcs account:00143456 files:46 lastdate:20181016",
+"broker:bcs account:00122223 files:46 lastdate:20181016",
+"broker:bcs account:00123458 files:48 lastdate:20181018",
+"broker:ib account:00100003 files:47 lastdate:20181017",
+"broker:ib account:00100002 files:48 lastdate:20181018",
+"broker:ib account:00100001 files:48 lastdate:20181018"};
     std::string path_to_ftp = "../";
     if (boost::filesystem::exists(path_to_ftp)) {
         std::cout << path_to_ftp << std::endl;
