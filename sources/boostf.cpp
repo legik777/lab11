@@ -45,4 +45,4 @@ void show_broker(std::vector<Broker> vec) {
     for (Broker b : vec) {
         std::cout << b.toString() << std::endl;
     }
-/
+}
