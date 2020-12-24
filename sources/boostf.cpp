@@ -36,13 +36,13 @@ std::vector<std::string> recdir(std::string path_to_ftp) {
     return ret;
 }
 
-/*void show_vector(std::vector<std::string> vec) {
+void show_vector(std::vector<std::string> vec) {
     for (std::vector<std::string>::iterator
          it = vec.begin(); it != vec.end(); ++it)
         std::cout << *it << std::endl;
-}*/
-/*void show_broker(std::vector<Broker> vec) {
+}
+void show_broker(std::vector<Broker> vec) {
     for (Broker b : vec) {
         std::cout << b.toString() << std::endl;
     }
-}*/
+/
