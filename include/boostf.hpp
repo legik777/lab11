@@ -10,7 +10,7 @@
 #include <string>
 #include <any>
 
-static const inst colfiles = 422;
+static const int colfiles = 422;
 
 class Broker {
 public:
