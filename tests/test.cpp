@@ -10,7 +10,7 @@ TEST(file, searchtest) {
         std::cout << path_to_ftp << std::endl;
         vec = recdir(path_to_ftp);
         std::cout << "number of files found " + vec.back() << std::endl;
-        EXPECT_EQ(422,  std::stoi(vec.back()));
+        EXPECT_EQ(colfiles,  std::stoi(vec.back()));
         vec.pop_back();
         show_vector(vec);
         show_broker(Broker::ListBrokersv());
