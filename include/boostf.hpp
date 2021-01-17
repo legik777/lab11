@@ -10,6 +10,8 @@
 #include <string>
 #include <any>
 
+static const inst colfiles = 422;
+
 class Broker {
 public:
     static std::vector<Broker> brokerVector;
