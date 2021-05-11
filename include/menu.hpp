@@ -6,13 +6,14 @@
 class EApplication {
     char ** argv;
     int argc;
-    public:
 
+public:
         void menu(int argc,
             const char ** argv);
     int exec();
     std::string path_to_programm;
-    private:
+
+private:
         boost::program_options::positional_options_description p;
 
     boost::program_options::options_description m_desk {
@@ -28,5 +29,4 @@ class EApplication {
     int thread_count; //êîëè÷åñòâî ïîòîêîâ
     std::string path; //ïóòü ê ôàéëó ñ ðåçóëüòàòîì
     std::string input_path;
-
 };
