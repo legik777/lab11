@@ -12,6 +12,7 @@
 #include "../include/pico.h"
 #include "boost/log/trivial.hpp"
 #include "boost/log/core.hpp"
+#include <boost/log/sources/logger.hpp>
 
 namespace po = boost::program_options;
 boost::log::v2s_mt_nt6::trivial::severity_level log_lvl =
