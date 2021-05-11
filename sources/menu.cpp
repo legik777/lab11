@@ -15,7 +15,7 @@
 #include <boost/log/sources/logger.hpp>
 
 namespace po = boost::program_options;
-boost::log::v2s_st::trivial::severity_level log_lvl =
+boost::log::trivial::severity_level log_lvl =
     boost::log::trivial::error;
 std::condition_variable heshFunction_cv, writeFunction_cv;
 std::mutex m;
