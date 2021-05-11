@@ -66,6 +66,7 @@ void readFileFunction(std::string input_file) {
 }
 
 void hashFunction(int n) {
+    n=1;
   while (hesh_work) {
     if (src.empty()) {
       hesh_work = false;
@@ -85,6 +86,8 @@ void hashFunction(int n) {
 }
 
 void writeFileFunction(int n, std::string path) {
+    n=1;
+    path="";
   while (write_work) {
     std::unique_lock<std::mutex> lk(m);
     if (ndb.size() != 0) {
