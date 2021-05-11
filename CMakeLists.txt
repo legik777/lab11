@@ -42,7 +42,7 @@ find_package(Boost 1.72.0 CONFIG REQUIRED regex system filesystem thread log log
 add_library(menu STATIC
   ${CMAKE_CURRENT_SOURCE_DIR}/sources/menu.cpp
 )
-add_executable(main
+add_library(main STATIC
  ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp
 )
 
