@@ -126,9 +126,7 @@ void createFileFunction(std::string path) {
     status = nrdb->CreateColumnFamilies(column_familiesD, &idb.handles);
 
     log(status.ToString());
-  }
-
-  else {
+  } else {
     // std::cout << status.ToString() << std::endl;
     std::vector<std::string> column_families;
     std::vector<rocksdb::ColumnFamilyHandle*> handles;
