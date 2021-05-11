@@ -84,7 +84,7 @@ void hashFunction() {
   }
 }
 
-void writeFileFunction(int n, std::string path) {
+void writeFileFunction(std::string path) {
     n = 1;
     path = "";
   while (write_work) {
@@ -200,7 +200,7 @@ int EApplication::exec() {
           hesh.push_back(std::thread(hashFunction));
         }
         for (int i = 0; i < thread_count; i++) {
-          write.push_back(std::thread(writeFileFunction, i,
+          write.push_back(std::thread(writeFileFunction,
                                       m_vm["output"].as<std::string>()));
         }
         for (int i = 0; i < thread_count; i++) {
