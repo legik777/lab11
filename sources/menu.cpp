@@ -1,3 +1,4 @@
+// Copyright 2020 Andreytorix
 #include "menu.hpp"
 #include <iostream>
 #include <mutex>
@@ -31,19 +32,19 @@ void log(std::string mes) {
     }
 }
 void readFileFunction(std::string input_file) {
-    rocksdb::DB* db; //переменная для хранения БД
+    rocksdb::DB* db; //ГЇГҐГ°ГҐГ¬ГҐГ­Г­Г Гї Г¤Г«Гї ГµГ°Г Г­ГҐГ­ГЁГї ГЃГ„
     rocksdb::Status status;
-    rocksdb::Options options; //опции
+    rocksdb::Options options; //Г®ГЇГ¶ГЁГЁ
     std::vector<std::string> column_families;
     std::vector<rocksdb::ColumnFamilyDescriptor> column_familiesD;
-    db->ListColumnFamilies(options, input_file, &column_families); //считываем семьи 
-    while (!column_families.empty()) { //создаём дескриптор семьи
+    db->ListColumnFamilies(options, input_file, &column_families); //Г±Г·ГЁГІГ»ГўГ ГҐГ¬ Г±ГҐГ¬ГјГЁ 
+    while (!column_families.empty()) { //Г±Г®Г§Г¤Г ВёГ¬ Г¤ГҐГ±ГЄГ°ГЁГЇГІГ®Г° Г±ГҐГ¬ГјГЁ
         std::string t1 = std::move(column_families.front());
-        log("Считывание данных...");
+        log("Г‘Г·ГЁГІГ»ГўГ Г­ГЁГҐ Г¤Г Г­Г­Г»Гµ...");
         column_families.erase(column_families.begin());
         column_familiesD.push_back(rocksdb::ColumnFamilyDescriptor(t1, rocksdb::ColumnFamilyOptions()));
     }
-    status = rocksdb::DB::Open(rocksdb::DBOptions(), input_file, column_familiesD, &idb.handles, &db); //открываем исходное хранлище в режиме только для чтения
+    status = rocksdb::DB::Open(rocksdb::DBOptions(), input_file, column_familiesD, &idb.handles, &db); //Г®ГІГЄГ°Г»ГўГ ГҐГ¬ ГЁГ±ГµГ®Г¤Г­Г®ГҐ ГµГ°Г Г­Г«ГЁГ№ГҐ Гў Г°ГҐГ¦ГЁГ¬ГҐ ГІГ®Г«ГјГЄГ® Г¤Г«Гї Г·ГІГҐГ­ГЁГї
          for (int i = 0; i < idb.handles.size(); i++) {
              rocksdb::Iterator* ter = db->NewIterator(rocksdb::ReadOptions(), idb.handles[i]);
              for (ter->SeekToFirst(); ter->Valid(); ter->Next()) {
@@ -106,7 +107,7 @@ status = nrdb->Put(rocksdb::WriteOptions(), idb.handles[ndb.back().family], rock
 
 void createFileFunction(std::string path) {
     rocksdb::Status status;
-    rocksdb::Options options; //опции
+    rocksdb::Options options; //Г®ГЇГ¶ГЁГЁ
     options.create_if_missing = true;
     options.compression = rocksdb::CompressionType::kNoCompression;
     std::vector<rocksdb::ColumnFamilyDescriptor> column_familiesD;
@@ -119,7 +120,7 @@ void createFileFunction(std::string path) {
     }
     status = rocksdb::DB::Open(options, path, &nrdb);
     if(status.ok()){
-        log("Файл создан");
+        log("Г”Г Г©Г« Г±Г®Г§Г¤Г Г­");
     status = nrdb->CreateColumnFamilies(column_familiesD, &idb.handles);
 
     log(status.ToString());
@@ -132,23 +133,23 @@ void createFileFunction(std::string path) {
         nrdb->ListColumnFamilies(options, path, &column_families);
         std::vector<rocksdb::ColumnFamilyDescriptor> column_familiesD;
         while (!column_families.empty()) {
-            std::string t1 = column_families.back(); //имя семьи
+            std::string t1 = column_families.back(); //ГЁГ¬Гї Г±ГҐГ¬ГјГЁ
             column_families.pop_back();
             //std::cout << t1 << std::endl;
             column_familiesD.push_back(rocksdb::ColumnFamilyDescriptor(
                 t1, rocksdb::ColumnFamilyOptions()));
         }
         status = rocksdb::DB::Open(rocksdb::DBOptions(), path, column_familiesD, &handles, &nrdb);
-        log("Статус: "+  status.ToString());
+        log("Г‘ГІГ ГІГіГ±: "+  status.ToString());
     }
 }
 
 void EApplication::menu(int argc, const char** argv) {
-    m_desk.add_options()("help", "вызов справки")
+    m_desk.add_options()("help", "ГўГ»Г§Г®Гў Г±ГЇГ°Г ГўГЄГЁ")
         ("log-level", boost::program_options::value<std::string>(&log_level)->composing()->default_value("error"), "\"info\"|\"warning\"|\"error\"")
-        ("thread-count", boost::program_options::value<int>(&thread_count)->composing()->default_value(std::thread::hardware_concurrency()), "количество потоков")
-        ("output", boost::program_options::value<std::string>(&path)->composing()->default_value("dbcs-storage.db"), "Путь к новому хранилищу")
-        ("input-file", boost::program_options::value<std::string>(&input_path)->composing()->default_value("source.db"), "Путь к хранилищу");
+        ("thread-count", boost::program_options::value<int>(&thread_count)->composing()->default_value(std::thread::hardware_concurrency()), "ГЄГ®Г«ГЁГ·ГҐГ±ГІГўГ® ГЇГ®ГІГ®ГЄГ®Гў")
+        ("output", boost::program_options::value<std::string>(&path)->composing()->default_value("dbcs-storage.db"), "ГЏГіГІГј ГЄ Г­Г®ГўГ®Г¬Гі ГµГ°Г Г­ГЁГ«ГЁГ№Гі")
+        ("input-file", boost::program_options::value<std::string>(&input_path)->composing()->default_value("source.db"), "ГЏГіГІГј ГЄ ГµГ°Г Г­ГЁГ«ГЁГ№Гі");
     p.add("input-file", -1);
     boost::program_options::store(boost::program_options::command_line_parser(argc, argv).options(m_desk).positional(p).run(), m_vm);
     boost::program_options::notify(m_vm);
@@ -190,11 +191,11 @@ int EApplication::exec() {
                 }
         }
         else {
-            std::cout << "Ошибка пути" << std::endl;
+            std::cout << "ГЋГёГЁГЎГЄГ  ГЇГіГІГЁ" << std::endl;
         }
     }
     else {
-        std::cout << "Пожалуйста, используйте --help опцию дл¤ вывода справки"
+        std::cout << "ГЏГ®Г¦Г Г«ГіГ©Г±ГІГ , ГЁГ±ГЇГ®Г«ГјГ§ГіГ©ГІГҐ --help Г®ГЇГ¶ГЁГѕ Г¤Г«В¤ ГўГ»ГўГ®Г¤Г  Г±ГЇГ°Г ГўГЄГЁ"
             << std::endl;
         return 1;
     }
