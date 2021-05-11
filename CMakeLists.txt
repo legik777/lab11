@@ -32,7 +32,7 @@ find_package(GTest CONFIG REQUIRED)
 hunter_add_package(rocksdb)
 find_package(RocksDB CONFIG REQUIRED)
 hunter_add_package(Boost COMPONENTS regex system filesystem log program_options thread)
-find_package(Boost 1.72.0 CONFIG REQUIRED regex system filesystem thread log log_setup program_options date_time threads)
+find_package(Boost 1.72.0 CONFIG REQUIRED regex system filesystem thread log log_setup program_options date_time)
 
 
 
