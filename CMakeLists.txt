@@ -58,11 +58,13 @@ target_include_directories(main
 target_include_directories(tests
   PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
-
-# TODO: change template word to project name and delete this comment
 target_link_libraries(tests GTest::gtest_main)
-#исправить
 target_link_libraries(menu Boost::program_options Boost::regex Boost::system Boost::filesystem Boost::log RocksDB::rocksdb)
+target_link_libraries(main Boost::program_options Boost::regex Boost::system Boost::filesystem Boost::log RocksDB::rocksdb)
+# TODO: change template word to project name and delete this comment
+
+#исправить
+
 
 #file(COPY misc DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
