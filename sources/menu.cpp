@@ -1,5 +1,5 @@
 // Copyright 2020 Andreytorix
-#include "menu.hpp"
+#include "../include/menu.hpp"
 #include <iostream>
 #include <mutex>
 #include <thread>
@@ -7,9 +7,9 @@
 #include "rocksdb/db.h"
 #include <assert.h>
 #include <string>
-#include "struct.hpp"
+#include "../include/struct.hpp"
 #include <condition_variable>
-#include "pico.hpp"
+#include "../include/pico.hpp"
 #include "boost/log/trivial.hpp"
 #include "boost/log/core.hpp"
 
