@@ -65,8 +65,7 @@ void readFileFunction(std::string input_file) {
   }
 }
 
-void hashFunction(int n) {
-    n = 1;
+void hashFunction() {
   while (hesh_work) {
     if (src.empty()) {
       hesh_work = false;
@@ -198,7 +197,7 @@ int EApplication::exec() {
         std::vector<std::thread> write;
         std::cout << thread_count << std::endl;
         for (int i = 0; i < thread_count; i++) {
-          hesh.push_back(std::thread(hashFunction, i));
+          hesh.push_back(std::thread(hashFunction));
         }
         for (int i = 0; i < thread_count; i++) {
           write.push_back(std::thread(writeFileFunction, i,
