@@ -85,7 +85,6 @@ void hashFunction() {
 }
 
 void writeFileFunction(std::string path) {
-    n = 1;
     path = "";
   while (write_work) {
     std::unique_lock<std::mutex> lk(m);
