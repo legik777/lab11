@@ -22,7 +22,7 @@ HunterGate(
 
 
 #имя проекта
-project(boost)
+project(lab10 VERSION 0.1.0)
 string(APPEND CMAKE_CXX_FLAGS " -pedantic -Werror -Wall -Wextra")
 string(APPEND CMAKE_CXX_FLAGS " -Wno-unused-command-line-argument")
 string(APPEND CMAKE_CXX_FLAGS " -Wshadow -Wnon-virtual-dtor")
@@ -30,13 +30,13 @@ string(APPEND CMAKE_CXX_FLAGS " -Wshadow -Wnon-virtual-dtor")
 hunter_add_package(GTest)
 find_package(GTest CONFIG REQUIRED)
 
-hunter_add_package(Boost COMPONENTS system filesystem)
-find_package(Boost 1.72.0 CONFIG REQUIRED system filesystem)
+hunter_add_package(Boost COMPONENTS regex system filesystem log program_options)
+find_package(Boost 1.72.0 CONFIG REQUIRED regex system filesystem thread log log_setup program_options date_time)
 
 
 
 add_library(boostf STATIC
-  ${CMAKE_CURRENT_SOURCE_DIR}/sources/boostf.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/sources/menu.cpp
 )
 add_executable(main
  ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp
@@ -47,7 +47,7 @@ add_executable(tests
 )
 
 
-target_include_directories(boostf
+target_include_directories(menu
   PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 target_include_directories(main
@@ -60,7 +60,7 @@ target_include_directories(tests
 
 # TODO: change template word to project name and delete this comment
 target_link_libraries(tests GTest::gtest_main boostf)
-
+#дописать
 target_link_libraries(boostf Boost::filesystem)
 target_link_libraries(main boostf)
 #target_link_libraries(testf Boost::filesystem)
