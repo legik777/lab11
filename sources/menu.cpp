@@ -9,7 +9,7 @@
 #include <string>
 #include "../include/struct.hpp"
 #include <condition_variable>
-#include "../include/pico.hpp"
+#include "../include/pico.h"
 #include "boost/log/trivial.hpp"
 #include "boost/log/core.hpp"
 
