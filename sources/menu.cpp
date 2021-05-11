@@ -114,7 +114,7 @@ void createFileFunction(std::string path) {
   options.create_if_missing = true;
   options.compression = rocksdb::CompressionType::kNoCompression;
   std::vector<rocksdb::ColumnFamilyDescriptor> column_familiesD;
-  for (int i = 0; i < idb.handles.size(); i++) {
+  for (uint64_t i = 0; i < idb.handles.size(); i++) {
     if (idb.handles[i]->GetName() != "default") {
       column_familiesD.push_back(rocksdb::ColumnFamilyDescriptor(
           idb.handles[i]->GetName(), rocksdb::ColumnFamilyOptions()));
@@ -132,7 +132,7 @@ void createFileFunction(std::string path) {
     std::vector<std::string> column_families;
     std::vector<rocksdb::ColumnFamilyHandle*> handles;
     nrdb->ListColumnFamilies(options, path, &column_families);
-    std::vector<rocksdb::ColumnFamilyDescriptor> column_familiesD;
+    //std::vector<rocksdb::ColumnFamilyDescriptor> column_familiesD;
     while (!column_families.empty()) {
       std::string t1 = column_families.back();  //èìÿ ñåìüè
       column_families.pop_back();
