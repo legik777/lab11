@@ -35,7 +35,7 @@ find_package(Boost 1.72.0 CONFIG REQUIRED regex system filesystem thread log log
 
 
 
-add_library(boostf STATIC
+add_library(menu STATIC
   ${CMAKE_CURRENT_SOURCE_DIR}/sources/menu.cpp
 )
 add_executable(main
