@@ -13,7 +13,7 @@
 #include "boost/log/trivial.hpp"
 #include "boost/log/core.hpp"
 #include <boost/log/sources/logger.hpp>
-
+#include <boost/program_options.hpp>
 namespace po = boost::program_options;
 boost::log::trivial::severity_level log_lvl =
     boost::log::trivial::error;
