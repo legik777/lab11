@@ -61,7 +61,6 @@ target_include_directories(tests
 target_link_libraries(tests GTest::gtest_main)
 target_link_libraries(menu Boost::program_options Boost::regex Boost::system Boost::filesystem Boost::log RocksDB::rocksdb)
 target_link_libraries(main menu)
-target_link_libraries(${PROJECT_NAME} Boost::log)
 # TODO: change template word to project name and delete this comment
 
 #исправить
