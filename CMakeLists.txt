@@ -60,9 +60,13 @@ target_include_directories(tests
 
 # TODO: change template word to project name and delete this comment
 target_link_libraries(tests GTest::gtest_main boostf)
-#дописать
+#исправить
 target_link_libraries(boostf Boost::filesystem)
 target_link_libraries(main boostf)
+
+
+
+
 #target_link_libraries(testf Boost::filesystem)
 
 #file(COPY misc DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
