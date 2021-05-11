@@ -51,7 +51,7 @@ void readFileFunction(std::string input_file) {
   status = rocksdb::DB::Open(
       rocksdb::DBOptions(), input_file, column_familiesD, &idb.handles,
       &db);  //îòêðûâàåì èñõîäíîå õðàíëèùå â ðåæèìå òîëüêî äëÿ ÷òåíèÿ
-  for (unsigned long i = 0; i < idb.handles.size(); i++) {
+  for (uint64_t i = 0; i < idb.handles.size(); i++) {
     rocksdb::Iterator* ter =
         db->NewIterator(rocksdb::ReadOptions(), idb.handles[i]);
     for (ter->SeekToFirst(); ter->Valid(); ter->Next()) {
