@@ -4,8 +4,8 @@
 #include <string>
 
 class EApplication {
-    char ** argv;
-    int argc;
+    //char ** argv;
+    //int argc;
 
 public:
         void menu(int argc,
