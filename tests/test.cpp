@@ -1,10 +1,10 @@
 // Copyright 2020 Andreytorix
 
 #include <gtest/gtest.h>
-#include <boostf.hpp>
-    std::vector<Broker> Broker::brokerVector;
+/*#include <boostf.hpp>
+    std::vector<Broker> Broker::brokerVector;*/
 TEST(file, searchtest) {
-    std::string path_to_ftp = "../";
+    /*std::string path_to_ftp = "../";
     std::vector<std::string> vec;
     if (boost::filesystem::exists(path_to_ftp)) {
         std::cout << path_to_ftp << std::endl;
@@ -16,7 +16,7 @@ TEST(file, searchtest) {
         show_broker(Broker::ListBrokersv());
     } else {
         std::cout << "dir not exist" << std::endl;
-    }
+    }*/
   EXPECT_TRUE(true);
 }
 
