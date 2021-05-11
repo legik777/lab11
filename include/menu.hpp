@@ -1,3 +1,4 @@
+// Copyright 2020 Andreytorix
 #pragma once
 #include <boost/program_options.hpp>
 #include <string>
@@ -12,7 +13,7 @@ public:
 private:
 	boost::program_options::positional_options_description p;
 	
-	boost::program_options::options_description m_desk{ "доступные опции" };
+	boost::program_options::options_description m_desk{ "Г¤Г®Г±ГІГіГЇГ­Г»ГҐ Г®ГЇГ¶ГЁГЁ" };
 	boost::program_options::variables_map m_vm;
 	/*
 	--log-level
@@ -20,8 +21,8 @@ private:
 	--output
 	*/
 	std::string log_level;      //
-	int thread_count;   //количество потоков
-	std::string path;     //путь к файлу с результатом
+	int thread_count;   //ГЄГ®Г«ГЁГ·ГҐГ±ГІГўГ® ГЇГ®ГІГ®ГЄГ®Гў
+	std::string path;     //ГЇГіГІГј ГЄ ГґГ Г©Г«Гі Г± Г°ГҐГ§ГіГ«ГјГІГ ГІГ®Г¬
 	std::string input_path; 
 	
 };
