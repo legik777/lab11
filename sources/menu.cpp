@@ -40,9 +40,9 @@ int EApplication::exec() {
     }
     std::string c = conf;
     auto t2 = async ::spawn([ & ch, c] { //cmake -H. -B_builds
-    -DCMAKE_INSTALL_PREFIX=_install -DCMAKE_BUILD_TYPE=Debug
-      ch = new bp::child("cmake -H. -B_builds -DCMAKE_INSTALL_PREFIX=_install
-     -DCMAKE_BUILD_TYPE=" + c, bp::std_out > stdout);
+    -DCMAKE_INSTALL_PREFIX = _install -DCMAKE_BUILD_TYPE=Debug
+ch = new bp::child("cmake -H. -B_builds -DCMAKE_INSTALL_PREFIX=_install -DCMAKE_BUILD_TYPE="
+                   + c, bp::std_out > stdout);
       ch -> wait();
     });
     auto t3 = t2.then([ & ch] {
