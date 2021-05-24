@@ -15,9 +15,11 @@ void EApplication::menu(int argc,
     (& conf) -> composing() -> default_value("Debug"), "\"Release\"|\"Debug\"")
     ("install", "�������� ���� ���������")
     ("pack", "�������� ���� ��������")
-    ("timeout", boost::program_options::value < int > ( & timeout) -> composing(), "����� �������� � ��������");
+    ("timeout", boost::program_options::value < int > ( & timeout) ->
+     composing(), "����� �������� � ��������");
   //p.add("input-file", -1);
-  boost::program_options::store(boost::program_options::command_line_parser(argc, argv).options(m_desk).positional(p).run(), m_vm);
+  boost::program_options::store(boost::program_options::
+                                command_line_parser(argc, argv).options(m_desk).positional(p).run(), m_vm);
   boost::program_options::notify(m_vm);
 }
 int EApplication::exec() {
