@@ -11,7 +11,8 @@ namespace bp = boost::process;
 void EApplication::menu(int argc,
   const char ** argv) {
   m_desk.add_options()("help", "����� �������")
-    ("config", boost::program_options::value < std::string > ( & conf) -> composing() -> default_value("Debug"), "\"Release\"|\"Debug\"")
+    ("config", boost::program_options::value < std::string >
+    (& conf) -> composing() -> default_value("Debug"), "\"Release\"|\"Debug\"")
     ("install", "�������� ���� ���������")
     ("pack", "�������� ���� ��������")
     ("timeout", boost::program_options::value < int > ( & timeout) -> composing(), "����� �������� � ��������");
