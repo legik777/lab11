@@ -8,9 +8,6 @@
 namespace po = boost::program_options;
 namespace bp = boost::process;
 
-const std::string dbuild = ".build";
-const std::string dinstall = ".install";
-
 void EApplication::menu(int argc,
   const char ** argv) {
   m_desk.add_options()("help", "����� �������")
