@@ -10,13 +10,13 @@ namespace bp = boost::process;
 
 void EApplication::menu(int argc,
   const char ** argv) {
-  m_desk.add_options()("help", "����� �������")
+  m_desk.add_options()("help", "вызов справки")
     ("config", boost::program_options::value < std::string >
     (& conf) -> composing() -> default_value("Debug"), "\"Release\"|\"Debug\"")
-    ("install", "�������� ���� ���������")
-    ("pack", "�������� ���� ��������")
+    ("install", "добавить этап установки")
+    ("pack", "добавить этап упаковки")
     ("timeout", boost::program_options::value < int > (& timeout) ->
-     composing(), "����� �������� � ��������");
+     composing(), "время ожидания в секундах");
   //p.add("input-file", -1);
   boost::program_options::store(boost::program_options::
   command_line_parser(argc, argv).options(m_desk).positional(p).run(), m_vm);
@@ -71,7 +71,8 @@ ch = new bp::child(
       }
       if (m_vm.count("pack")) {
         auto t4 = t3.then([ & ch] {
-          ch = new bp::child("cmake --build _builds --target package", bp::std_out > stdout);
+          ch = new bp::child(
+    "cmake --build _builds --target package", bp::std_out > stdout);
           ch -> wait();
         });
       }
