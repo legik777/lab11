@@ -1,16 +1,10 @@
 // Copyright 2021 Andreytorix
 #include "menu.hpp"
-
 #include <iostream>
-
 #include "async++.h"
-
 #include <thread>
-
 #include <boost/process.hpp>
-
 #include <boost/bind.hpp>
-
 namespace po = boost::program_options;
 namespace bp = boost::process;
 
