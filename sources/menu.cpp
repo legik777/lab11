@@ -40,8 +40,9 @@ int EApplication::exec() {
     }
     std::string c = conf;
     auto t2 = async ::spawn([ & ch, c] { //cmake -H. -B_builds
-    -DCMAKE_INSTALL_PREFIX = _install -DCMAKE_BUILD_TYPE=Debug
-ch = new bp::child("cmake -H. -B_builds -DCMAKE_INSTALL_PREFIX=_install -DCMAKE_BUILD_TYPE="
+    -DCMAKE_INSTALL_PREFIX = _install -DCMAKE_BUILD_TYPE = Debug
+ch = new bp::child(
+"cmake -H. -B_builds -DCMAKE_INSTALL_PREFIX = _install -DCMAKE_BUILD_TYPE = "
                    + c, bp::std_out > stdout);
       ch -> wait();
     });
@@ -51,17 +52,20 @@ ch = new bp::child("cmake -H. -B_builds -DCMAKE_INSTALL_PREFIX=_install -DCMAKE_
     });
     if (m_vm.count("install") && m_vm.count("pack")) {
       auto t4 = t3.then([ & ch] {
-        ch = new bp::child("cmake --build _builds --target install", bp::std_out > stdout);
+        ch = new bp::child(
+    "cmake --build _builds --target install", bp::std_out > stdout);
         ch -> wait();
       });
       auto t5 = t4.then([ & ch] {
-        ch = new bp::child("cmake --build _builds --target package", bp::std_out > stdout);
+        ch = new bp::child(
+     "cmake --build _builds --target package", bp::std_out > stdout);
         ch -> wait();
       });
     } else {
       if (m_vm.count("install")) {
         auto t4 = t3.then([ & ch] {
-          ch = new bp::child("cmake --build _builds --target install", bp::std_out > stdout);
+          ch = new bp::child(
+    "cmake --build _builds --target install", bp::std_out > stdout);
           ch -> wait();
         });
       }
