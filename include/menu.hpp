@@ -3,8 +3,8 @@
 #include <boost/program_options.hpp>
 #include <string>
 class EApplication {
-    char** argv1;
-    int argc1;
+    //char** argv1;
+   // int argc1;
 public:
     void menu(int argc, const char** argv);
     int exec();
