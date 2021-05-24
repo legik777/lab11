@@ -1,4 +1,4 @@
-// Copyright 2020 Andreytorix
+// Copyright 2021 Andreytorix
 #include "menu.hpp"
 
 #include <iostream>
