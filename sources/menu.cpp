@@ -15,11 +15,11 @@ void EApplication::menu(int argc,
     (& conf) -> composing() -> default_value("Debug"), "\"Release\"|\"Debug\"")
     ("install", "�������� ���� ���������")
     ("pack", "�������� ���� ��������")
-    ("timeout", boost::program_options::value < int > ( & timeout) ->
+    ("timeout", boost::program_options::value < int > (& timeout) ->
      composing(), "����� �������� � ��������");
   //p.add("input-file", -1);
   boost::program_options::store(boost::program_options::
-                                command_line_parser(argc, argv).options(m_desk).positional(p).run(), m_vm);
+  command_line_parser(argc, argv).options(m_desk).positional(p).run(), m_vm);
   boost::program_options::notify(m_vm);
 }
 int EApplication::exec() {
@@ -39,8 +39,10 @@ int EApplication::exec() {
       });
     }
     std::string c = conf;
-    auto t2 = async ::spawn([ & ch, c] { //cmake -H. -B_builds -DCMAKE_INSTALL_PREFIX=_install -DCMAKE_BUILD_TYPE=Debug
-      ch = new bp::child("cmake -H. -B_builds -DCMAKE_INSTALL_PREFIX=_install -DCMAKE_BUILD_TYPE=" + c, bp::std_out > stdout);
+    auto t2 = async ::spawn([ & ch, c] { //cmake -H. -B_builds
+    -DCMAKE_INSTALL_PREFIX=_install -DCMAKE_BUILD_TYPE=Debug
+      ch = new bp::child("cmake -H. -B_builds -DCMAKE_INSTALL_PREFIX=_install
+     -DCMAKE_BUILD_TYPE=" + c, bp::std_out > stdout);
       ch -> wait();
     });
     auto t3 = t2.then([ & ch] {
