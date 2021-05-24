@@ -14,7 +14,7 @@ private:
     boost::program_options::options_description m_desk{ "доступные опции" };
     boost::program_options::variables_map m_vm;
     std::string conf;
-    bool insta;
-    bool pack;
+    //bool insta;
+    //bool pack;
     int timeout;
 };
